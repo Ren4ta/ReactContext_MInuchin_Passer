@@ -1,12 +1,12 @@
 import React from "react"; 
-import { ThemeProvider } from "./src/assets/contexts/ThemeContext";
-import { UnitProvider } from "./src/assets/contexts/UnitContext";
-import { WeatherProvider } from "./src/assets/contexts/WeatherContext";
-import CurrentWeather from "./src/assets/components/CurrentWeather";
-import HourlyForecast from "./src/assets/components/HourlyForecast";
-import DailyForecast from "./src/assets/components/DailyForecast";
-import CityWeather from "./src/assets/components/CityWeather";
-import SearchBar from "./src/assets/components/SearchBar"; // 👈 CAMBIO: Import nuevo
+import { UnitsProvider } from "./assets/contexts/UnitsContext"
+
+import { WeatherProvider } from "./assets/contexts/WeatherContext";
+import CurrentWeather from "./assets/components/CurrentWeather/CurrentWeather";
+import HourlyForecast from "./assets/components/HourlyForecast/HourlyForecast";
+import DailyForecast from "./assets/components/DailyForecast/DailyForecast";
+import CitySummary from "./assets/components/CitySummary/CitySummary";
+import SearchBar from "./assets/components/SearchBar/SearchBar"; // 👈 CAMBIO: Import nuevo
 
 function App() {
   const [selectedCity, setSelectedCity] = React.useState("Buenos Aires");
