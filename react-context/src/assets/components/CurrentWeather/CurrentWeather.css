@@ -1,0 +1,42 @@
+.current-weather {
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f3f4f6;
+  color: #1f2937;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.current-weather.dark {
+  background-color: #374151;
+  color: #d1d5db;
+}
+
+.current-weather h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.current-weather p {
+  margin: 0.25rem 0;
+}
+
+.current-weather .text-4xl {
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .current-weather {
+    padding: 0.75rem;
+  }
+  .current-weather .text-4xl {
+    font-size: 1.75rem;
+  }
+  .current-weather h2 {
+    font-size: 1rem;
+  }
+}

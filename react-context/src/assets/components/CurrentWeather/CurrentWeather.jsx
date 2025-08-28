@@ -1,6 +1,7 @@
 import { useWeather } from "../../contexts/WeatherContext";
 import { useUnits } from "../../contexts/UnitsContext";
-import { kelvinToCelsius, kelvinToFahrenheit } from "../../utils/Conversions";
+import { kelvinToCelsius, kelvinToFahrenheit } from "../../utils/Conversions"; 
+import "./CurrentWeather.css";
 
 export default function CurrentWeather() {
   const { weather, loading, error } = useWeather();

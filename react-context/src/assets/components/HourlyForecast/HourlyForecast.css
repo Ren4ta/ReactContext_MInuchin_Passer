@@ -1,0 +1,32 @@
+.hourly-forecast {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.hourly-forecast > div {
+  padding: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.hourly-forecast > div.dark {
+  background-color: #4b5563;
+  color: #d1d5db;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .hourly-forecast {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .hourly-forecast {
+    grid-template-columns: 1fr;
+  }
+}

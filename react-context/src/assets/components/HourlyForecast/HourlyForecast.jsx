@@ -1,6 +1,7 @@
 import { useWeather } from "../../contexts/WeatherContext";
 import { useUnits } from "../../contexts/UnitsContext";
-import { kelvinToCelsius, kelvinToFahrenheit } from "../../utils/Conversions";
+import { kelvinToCelsius, kelvinToFahrenheit } from "../../utils/Conversions"; 
+import "./HourlyForecast.css";
 
 export default function HourlyForecast() {
   const { forecast } = useWeather();
