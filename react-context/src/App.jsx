@@ -1,32 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { UnitsProvider } from "./assets/contexts/UnitsContext";
-import { WeatherProvider } from "./assets/contexts/WeatherContext";
-import { ThemeProvider } from "./assets/contexts/ThemeContext"; // Import the new ThemeProvider
+import { WeatherProvider, useWeather } from "./assets/contexts/WeatherContext";
+import { ThemeProvider } from "./assets/contexts/ThemeContext";
 import CurrentWeather from "./assets/components/CurrentWeather/CurrentWeather";
 import HourlyForecast from "./assets/components/HourlyForecast/HourlyForecast";
 import DailyForecast from "./assets/components/DailyForecast/DailyForecast";
 import CitySummary from "./assets/components/CitySummary/CitySummary";
 import SearchBar from "./assets/components/SearchBar/SearchBar";
-import './App.css';
+import "./App.css";
 
-function App() {
-  const [selectedCity, setSelectedCity] = React.useState("Buenos Aires");
+function AppContent() {
+  const [selectedCity, setSelectedCity] = useState("Buenos Aires");
+  const { fetchWeather } = useWeather();
 
   const handleCitySearch = (city) => {
     setSelectedCity(city);
+    fetchWeather(city); // Trigger weather fetch for the new city
   };
 
   return (
-    <ThemeProvider> {/* Use the custom ThemeProvider */}
+    <div className="weather-app p-6">
+      <SearchBar onSearch={handleCitySearch} />
+      <CurrentWeather />
+      <HourlyForecast />
+      <DailyForecast />
+      <CitySummary />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
       <UnitsProvider>
         <WeatherProvider>
-          <div className="weather-app p-6">
-            <SearchBar onSearch={handleCitySearch} />
-            <CurrentWeather />
-            <HourlyForecast />
-            <DailyForecast />
-            <CitySummary />
-          </div>
+          <AppContent />
         </WeatherProvider>
       </UnitsProvider>
     </ThemeProvider>

@@ -1,34 +1,26 @@
 import { useWeather } from "../../contexts/WeatherContext";
 import { useUnits } from "../../contexts/UnitsContext";
 import { kelvinToCelsius, kelvinToFahrenheit } from "../../utils/Conversions";
-import "./DailyForecast.css"; 
 
 export default function DailyForecast() {
-  const { forecast } = useWeather();
+  const { forecast, loading, error } = useWeather();
   const { unit } = useUnits();
 
-  const days = {};
-  forecast.forEach((f) => {
-    const date = new Date(f.dt * 1000).toLocaleDateString();
-    if (!days[date]) days[date] = [];
-    days[date].push(f);
-  });
-
-  const daily = Object.entries(days).slice(0, 5);
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>{error}</p>;
+  if (!forecast) return <p>No hay datos disponibles</p>;
 
   return (
-    <div className="daily-forecast grid grid-cols-2 gap-2">
-      {daily.map(([date, values], i) => {
-        const temps = values.map((v) => v.main.temp);
-        const min = Math.min(...temps);
-        const max = Math.max(...temps);
-        const displayMin = unit === "C" ? kelvinToCelsius(min) : kelvinToFahrenheit(min);
-        const displayMax = unit === "C" ? kelvinToCelsius(max) : kelvinToFahrenheit(max);
-
+    <div className="daily-forecast">
+      {forecast.map((day, index) => {
+        const date = new Date(day.dt_txt).toLocaleDateString();
+        const temp = unit === "C" ? kelvinToCelsius(day.main.temp) : kelvinToFahrenheit(day.main.temp);
         return (
-          <div key={i} className="p-2 bg-white dark:bg-gray-700 rounded-xl shadow">
-            <p>{date}</p>
-            <p>Min: {displayMin}°{unit} / Max: {displayMax}°{unit}</p>
+          <div key={index} className="dark:bg-gray-700">
+            <h4>{date}</h4>
+            <p>{temp}°{unit}</p>
+            <p>{day.weather[0].description}</p>
+            {/* Add icon if available */}
           </div>
         );
       })}

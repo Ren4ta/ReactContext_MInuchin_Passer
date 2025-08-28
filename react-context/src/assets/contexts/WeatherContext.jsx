@@ -5,7 +5,7 @@ const WeatherContext = createContext();
 export const useWeather = () => useContext(WeatherContext);
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
-console.log("API Key in WeatherContext:", API_KEY); // Debug log
+console.log("API Key in WeatherContext:", API_KEY);
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 export function WeatherProvider({ children }) {
@@ -18,24 +18,39 @@ export function WeatherProvider({ children }) {
     try {
       setLoading(true);
       setError(null);
-      const currentRes = await axios.get(`${BASE_URL}/weather?q=${city}&appid=${API_KEY}`);
-      const forecastRes = await axios.get(`${BASE_URL}/forecast?q=${city}&appid=${API_KEY}`);
-      setWeather(currentRes.data);
-      setForecast(forecastRes.data.list);
+      if (!API_KEY) throw new Error("API Key is undefined");
+      console.log("Fetching weather for:", city, "with API Key:", API_KEY);
+      let lat, lon;
+      if (city === "current") {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
+        const currentRes = await axios.get(`${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+        const forecastRes = await axios.get(`${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+        setWeather(currentRes.data);
+        setForecast(forecastRes.data.list.filter((item, index) => index % 8 === 0).slice(0, 5));
+      } else {
+        const currentRes = await axios.get(`${BASE_URL}/weather?q=${city}&appid=${API_KEY}`);
+        const forecastRes = await axios.get(`${BASE_URL}/forecast?q=${city}&appid=${API_KEY}`);
+        setWeather(currentRes.data);
+        setForecast(forecastRes.data.list.filter((item, index) => index % 8 === 0).slice(0, 5));
+      }
     } catch (err) {
-      console.error("Fetch error:", err);
-      setError("Ciudad no encontrada o error de API");
+      console.error("Fetch error:", err.message);
+      setError(err.message.includes("geolocation") ? "Permiso de geolocalización denegado" : "Error de API");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchWeather();
+    fetchWeather(); // Initial fetch on mount
   }, []);
 
   return (
-    <WeatherContext.Provider value={{ weather, forecast, loading, error, fetchWeather, apiKey: API_KEY }}>
+    <WeatherContext.Provider value={{ weather, forecast, loading, error, fetchWeather }}>
       {children}
     </WeatherContext.Provider>
   );
