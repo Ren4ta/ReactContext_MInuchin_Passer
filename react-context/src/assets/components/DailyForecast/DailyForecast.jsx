@@ -14,13 +14,18 @@ export default function DailyForecast() {
     <div className="daily-forecast">
       {forecast.map((day, index) => {
         const date = new Date(day.dt_txt).toLocaleDateString();
-        const temp = unit === "C" ? kelvinToCelsius(day.main.temp) : kelvinToFahrenheit(day.main.temp);
+        const temp =
+          unit === "C"
+            ? kelvinToCelsius(day.main.temp)
+            : kelvinToFahrenheit(day.main.temp);
+
         return (
-          <div key={index} className="dark:bg-gray-700">
+          <div key={index}>
             <h4>{date}</h4>
-            <p>{temp}°{unit}</p>
+            <p>
+              {temp}°{unit}
+            </p>
             <p>{day.weather[0].description}</p>
-            {/* Add icon if available */}
           </div>
         );
       })}

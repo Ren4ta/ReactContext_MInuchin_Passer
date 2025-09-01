@@ -1,36 +1,39 @@
 .weather-app {
-  padding: 1.5rem;
-  background-color: #1e293b;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.5rem;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
   color: #f9fafb;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: auto;
+}
+
+.card {
+  background: #1e293b;
   border-radius: 1rem;
-  min-height: 100vh;
-  max-width: 1200px;
-  margin: 0 auto;
-  box-sizing: border-box;
+  padding: 1.25rem;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .weather-app {
-    padding: 1rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .weather-app {
-    padding: 0.5rem;
-    border-radius: 0;
-  }
-}
-
-/* Ensure compatibility with older browsers */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #d1d5db;
 }
